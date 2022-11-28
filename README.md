@@ -8,7 +8,7 @@
 1. 获取token，形如: Bearer xxxxx|xxxxxxxxxxxxxxxx
 2. 
 ```bash
-    go install github.com/scmtble/flomo
+    go install github.com/scmtble/flomo@latest
 ```
 3. 
 ```bash
