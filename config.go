@@ -18,10 +18,7 @@ func PathExists(path string) bool {
 	if err == nil {
 		return true
 	}
-	if os.IsNotExist(err) {
-		return false
-	}
-	return false
+	return os.IsExist(err)
 }
 
 func deleteConfig() {
@@ -45,8 +42,7 @@ func createConfig(data []byte) error {
 	defer file.Close()
 
 	// data写入配置文件
-	_, err = file.Write(data)
-	if err != nil {
+	if _, err = file.Write(data); err != nil {
 		return fmt.Errorf("写入配置文件失败")
 	}
 

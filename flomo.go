@@ -18,20 +18,17 @@ type Client struct {
 	token  string
 }
 
-func NewWithAccount(email, password string) *Client {
+func NewWithAccount(email, password string) (*Client, error) {
 	c := rest.New().EnableTrace().SetHeader("user-agent", defaultAg)
 	cc := &Client{
 		client: c,
 		token:  "",
 	}
-	err := cc.login(email, password)
-	if err != nil {
-		// 登录出错
-		log.Fatalln(err)
-		return nil
+	if err := cc.login(email, password); err != nil {
+		return nil, err
 	}
 
-	return cc
+	return cc, nil
 }
 
 func NewWithToken(token string) (*Client, error) {
@@ -40,8 +37,7 @@ func NewWithToken(token string) (*Client, error) {
 		client: c,
 		token:  token,
 	}
-	err := cc.checkToken()
-	if err != nil {
+	if err := cc.checkToken(); err != nil {
 		// token过期错误等
 		log.Fatalln(err)
 		return nil, fmt.Errorf("NewWithToken() err :%v", err)

@@ -26,7 +26,7 @@ func main() {
 	app.Commands = []*cli.Command{
 		{
 			Name:   "token",
-			Usage:  "set token eg:flomo token xxxxx",
+			Usage:  "set token eg:flomo token 'xxxxx'",
 			Action: tokenCmd(),
 		},
 		{
@@ -39,9 +39,13 @@ func main() {
 			Usage:  "new a mono",
 			Action: newCmd(),
 		},
+		{
+			Name:   "vim",
+			Usage:  "use vim to new a mono",
+			Action: vimCmd(),
+		},
 	}
-	err = app.Run(os.Args)
-	if err != nil {
+	if err = app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
 }
